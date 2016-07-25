@@ -22,13 +22,13 @@ import java.util.List;
 public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.enableSimpleBroker("/value/");
+        registry.enableSimpleBroker("/stock");
         registry.setApplicationDestinationPrefixes("/app");
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/listen").withSockJS();
+        registry.addEndpoint("/recv").withSockJS();
     }
 
 }

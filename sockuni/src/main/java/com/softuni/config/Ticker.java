@@ -26,15 +26,14 @@ public class Ticker {
     @Autowired
     SimpMessagingTemplate simpMessagingTemplate;
 
-    @Scheduled(fixedRate = 60_000)
+    @Scheduled(fixedRate = 5_000)
     public void tick() {
         stockRepository.findAll().forEach(this::generate);
     }
 
     private StockValue generate(Stock stock) {
         StockValue stockValue = stockValueRepository.save(new StockValue(stock, 100 * Math.random()));
-        simpMessagingTemplate.convertAndSend("/value/" + stock.getCode(), stockValue);
+        simpMessagingTemplate.convertAndSend("/stock/" + stock.getCode(), stockValue);
         return stockValue;
-
     }
 }

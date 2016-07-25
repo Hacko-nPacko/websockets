@@ -1,5 +1,8 @@
 package com.softuni.config;
 
+import com.fasterxml.jackson.databind.Module;
+import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
+import com.fasterxml.jackson.datatype.joda.JodaModule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -14,18 +17,14 @@ import java.util.List;
 @Configuration
 public class WebConfig extends WebMvcConfigurerAdapter {
 
-    @Override
-    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        converters.add(mappingJackson2HttpMessageConverter());
-    }
-
     @Bean
-    public HibernateAwareObjectMapper hibernateAwareObjectMapper() {
-        return new HibernateAwareObjectMapper();
+    public Module datatypeHibernateModule() {
+        Hibernate4Module module = new Hibernate4Module();
+        module.configure(Hibernate4Module.Feature.SERIALIZE_IDENTIFIER_FOR_LAZY_NOT_LOADED_OBJECTS, true);
+        return module;
     }
-
     @Bean
-    public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
-        return new MappingJackson2HttpMessageConverter(hibernateAwareObjectMapper());
+    public Module jodaHibernateModule() {
+        return new JodaModule();
     }
 }

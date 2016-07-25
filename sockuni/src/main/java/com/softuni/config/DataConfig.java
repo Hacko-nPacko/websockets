@@ -17,5 +17,4 @@ import java.util.concurrent.ThreadPoolExecutor;
 @EnableJpaAuditing
 public class DataConfig {
 
-
 }

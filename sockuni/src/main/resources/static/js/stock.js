@@ -15,14 +15,13 @@ $(document).ready(function () {
     var stompClient = null;
 
     $("button.btn-connect").click(function() {
-        var socket = new SockJS('/listen');
+        var socket = new SockJS('/recv');
         stompClient = Stomp.over(socket);
 
         stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
             $("button.btn-ctrl").toggleClass("hide");
             $("button.btn-stock").toggleAttr("disabled");
-            getStockValues();
         });
     });
 
@@ -35,28 +34,26 @@ $(document).ready(function () {
         $("button.btn-stock").toggleAttr("disabled");
     });
 
-    function subscribe(code) {
+    $("button.btn-subscribe").click(function() {
         if (stompClient != null) {
-            stompClient.subscribe('/value/' + code, function (message) {
-                console.log(message);
-                // updateStock(JSON.parse(greeting.body).content);
+            var code = $(this).parents("tr").data("stock");
+            stompClient.subscribe('/stock/' + code, function (message) {
+                updateStock(JSON.parse(message.body));
             });
+            $("tr[data-stock=" + code + "]").find("button.btn-stock").toggleClass("hide");
         }
-    }
+    });
 
-    function unsubscribe(code) {
-        stompClient.unsubscribe(code)
-    }
-
-    function getStockValues() {
-        console.log(stompClient.send("/app/listen"));
-    }
+    $("button.btn-unsubscribe").click(function() {
+        if (stompClient != null) {
+            var code = $(this).parents("tr").data("stock");
+            stompClient.unsubscribe("/stock/" + code);
+            $("tr[data-stock=" + code + "]").find("button.btn-stock").toggleClass("hide");
+        }
+    });
 
     function updateStock(message) {
-        var response = document.getElementById('response');
-        var p = document.createElement('p');
-        p.style.wordWrap = 'break-word';
-        p.appendChild(document.createTextNode(message));
-        response.appendChild(p);
+        console.log(message);
+        $("tr[data-stock=" + message.stock.code + "]").find("td.value").text(message.value);
     }
 });
