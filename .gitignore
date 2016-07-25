@@ -1,0 +1,9 @@
+.DS_Store
+.idea
+*.iws
+*.ipr
+*.iml
+catalina.base_IS_UNDEFINED/
+target/
+publish/target/
+sockuni/target
