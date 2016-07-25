@@ -29,7 +29,7 @@ public class StockValue {
     Long id;
 
     @NotNull
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     private Stock stock;
 
     private double value;

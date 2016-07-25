@@ -32,14 +32,18 @@ $(document).ready(function () {
         console.log("Disconnected");
         $("button.btn-ctrl").toggleClass("hide");
         $("button.btn-stock").toggleAttr("disabled");
+        $("button.btn-stock.btn-subscribe").removeClass("hide");
+        $("button.btn-stock.btn-unsubscribe").addClass("hide");
     });
 
     $("button.btn-subscribe").click(function() {
         if (stompClient != null) {
             var code = $(this).parents("tr").data("stock");
-            stompClient.subscribe('/stock/' + code, function (message) {
+            var sub = stompClient.subscribe('/stock/' + code, function (message) {
                 updateStock(JSON.parse(message.body));
             });
+            var send = stompClient.send("/app/recv/" + code, {}, {});
+            $(this).parents("tr").data("sub-id", sub);
             $("tr[data-stock=" + code + "]").find("button.btn-stock").toggleClass("hide");
         }
     });
@@ -47,7 +51,8 @@ $(document).ready(function () {
     $("button.btn-unsubscribe").click(function() {
         if (stompClient != null) {
             var code = $(this).parents("tr").data("stock");
-            stompClient.unsubscribe("/stock/" + code);
+            var sub = $(this).parents("tr").data("sub-id");
+            stompClient.unsubscribe(sub.id);
             $("tr[data-stock=" + code + "]").find("button.btn-stock").toggleClass("hide");
         }
     });

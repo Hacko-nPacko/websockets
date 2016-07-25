@@ -4,19 +4,17 @@ import com.softuni.model.Stock;
 import com.softuni.model.StockValue;
 import com.softuni.repository.StockRepository;
 import com.softuni.repository.StockValueRepository;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import javax.transaction.Transactional;
 
 /**
  * Created by niakoi on 29/6/16.
@@ -35,10 +33,10 @@ public class StockController {
         model.addAttribute(stockRepository.findAll());
     }
 
-    @SubscribeMapping("/app/stock/{stock}")
+    @MessageMapping("/recv/{stock}")
+    @SendTo("/stock/{stock}")
     public StockValue listen(@DestinationVariable Stock stock) {
         StockValue stockValue = stockValueRepository.findFirstByStockOrderByCreatedDateDesc(stock);
-        stockValue.getStock();
         return stockValue;
     }
 
