@@ -29,14 +29,11 @@ public class Demo implements CommandLineRunner {
         Stock yhoo = stockRepository.save(new Stock("YHOO"));
         Stock orcl = stockRepository.save(new Stock("ORCL"));
 
-        IntStream.rangeClosed(0, 3 * 60).forEach(i -> {
-            save(aapl, DateTime.now().minusHours(3 * 60 - i));
-            save(yhoo, DateTime.now().minusHours(3 * 60 - i));
-            save(orcl, DateTime.now().minusHours(3 * 60 - i));
+        IntStream.rangeClosed(0, 10).forEach(i -> {
+            save(aapl, DateTime.now().minusMinutes(10 - i));
+            save(yhoo, DateTime.now().minusMinutes(10 - i));
+            save(orcl, DateTime.now().minusMinutes(10 - i));
         });
-
-
-
         StockValue lastAAPL = stockValueRepository.findFirstByStockOrderByCreatedDateDesc(aapl);
         StockValue lastYHOO = stockValueRepository.findFirstByStockOrderByCreatedDateDesc(yhoo);
         StockValue lastORCL = stockValueRepository.findFirstByStockOrderByCreatedDateDesc(orcl);

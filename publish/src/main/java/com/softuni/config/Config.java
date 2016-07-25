@@ -13,8 +13,6 @@ import java.util.concurrent.ThreadPoolExecutor;
  * Created by niakoi on 29/6/16.
  */
 @Configuration
-@EnableSpringDataWebSupport
-@EnableJpaAuditing
 public class Config {
 
     @Bean

@@ -4,6 +4,8 @@ import com.softuni.model.Stock;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.stream.Stream;
+
 /**
  * Created by niakoi on 27/6/16.
  */

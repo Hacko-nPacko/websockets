@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+>
 <head th:fragment="head">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
           integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"/>
@@ -14,8 +14,8 @@
 </head>
 <body>
 <!-- Static navbar -->
-<nav class="navbar navbar-default" th:fragment="header">
-    <div class="container-fluid">
+<div class="container" th:fragment="header">
+    <nav class="navbar navbar-default">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
                     aria-expanded="false" aria-controls="navbar">
@@ -45,34 +45,21 @@
                     </ul>
                 </li>
             </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li sec:authorize="isAnonymous()"><a href="./">Anonymous</a></li>
-                <li sec:authorize="isAuthenticated()" class="navbar-text">
-                    Logged user: <span sec:authentication="name">user</span> |
-                    Roles: <span sec:authentication="principal.authorities">roles</span>
-                </li>
-
-            </ul>
-            <form class="navbar-form navbar-right" th:action="@{/logout}" method="POST" sec:authorize="isAuthenticated()">
-                <button class="btn" type="submit">Logout</button>
-            </form>
         </div><!--/.nav-collapse -->
-    </div><!--/.container-fluid -->
-</nav>
+    </nav>
+</div><!--/.container-fluid -->
 
 content
 
 <footer class="footer" th:fragment="footer">
     <div class="container">
-        <div class="col-sm-4">
-            <ul>
-                <li><a href="/login">login</a></li>
-                <li><a href="/secure">secured</a></li>
-                <li><a href="/admin">admin</a></li>
-            </ul>
+        <div class="row">
+            <div class="col-sm-4">
+                footer
+            </div>
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4"></div>
         </div>
-        <div class="col-sm-4"></div>
-        <div class="col-sm-4"></div>
     </div>
 </footer>
 

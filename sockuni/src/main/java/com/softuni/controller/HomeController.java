@@ -17,6 +17,6 @@ public class HomeController {
 
     @RequestMapping("/")
     public String home() {
-        return "index";
+        return "redirect:/stock";
     }
 }
