@@ -1,13 +1,40 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="inc/layout :: head"></head>
 <body>
 <div th:replace="inc/layout :: header"/>
 <div class="container">
+
     <div class="row">
-        <div class="col-sm-4">home content</div>
-        <div class="col-sm-4"></div>
-        <div class="col-sm-4"></div>
+        <div class="col-sm-12">
+            <button class="btn btn-default btn-ctrl btn-connect">Connect</button>
+            <button class="btn btn-default btn-ctrl btn-disconnect hide">Disconnect</button>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table-bordered">
+            <thead>
+            <tr>
+                <th>name</th>
+                <th></th>
+                <th>value</th>
+            </tr>
+            </thead>
+            <tbody>
+
+
+            <tr th:each="stock : ${stockList}" th:attr="data-stock=${stock.code}">
+                <td th:text="${stock.code}">code</td>
+                <td>
+                    <button class="btn btn-default btn-stock btn-subscribe" disabled="disabled">Subscribe</button>
+                    <button class="btn btn-default btn-stock btn-unsubscribe hide" disabled="disabled">Unsubscribe</button>
+                </td>
+                <td class="value"></td>
+            </tr>
+
+            </tbody>
+        </table>
+
     </div>
 </div>
 <div th:replace="inc/layout :: footer"/>

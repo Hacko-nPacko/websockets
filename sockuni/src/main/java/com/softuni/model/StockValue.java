@@ -1,5 +1,10 @@
 package com.softuni.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.softuni.model.view.StockValueView;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -28,12 +33,15 @@ public class StockValue {
 
     @NotNull
     @OneToOne(fetch = FetchType.LAZY)
+    @JsonView(StockValueView.Summary.class)
     private Stock stock;
 
+    @JsonView(StockValueView.Summary.class)
     private double value;
 
     @CreatedDate
     @Setter
+    @JsonView(StockValueView.Summary.class)
     DateTime createdDate;
 
     public StockValue(Stock stock, double value) {

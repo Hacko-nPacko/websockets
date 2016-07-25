@@ -2,10 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
 >
 <head th:fragment="head">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
-          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
-          integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="/lib/css/bootstrap/3.3.6/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/lib/css/bootstrap/3.3.6/css/bootstrap-theme.min.css"/>
     <style>
         body {
             padding-top: 20px;
@@ -13,7 +11,7 @@
     </style>
 </head>
 <body>
-<!-- Static navbar -->
+
 <div class="container" th:fragment="header">
     <nav class="navbar navbar-default">
         <div class="navbar-header">
@@ -65,12 +63,13 @@ content
 
 
 <div th:fragment="scripts">
-    <script src="https://code.jquery.com/jquery-3.0.0.min.js"
-            integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0=" crossorigin="anonymous"></script>
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
-            integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
-            crossorigin="anonymous"></script>
+    <script src="/lib/js/jquery/2.2.4/dist/jquery.min.js" type="application/javascript"></script>
+    <script src="/lib/css/bootstrap/3.3.6/js/bootstrap.min.js" type="application/javascript"></script>
+
+    <script src="/lib/js/sockjs/1.1.1/dist/sockjs-1.1.1.min.js" type="application/javascript"></script>
+    <script src="/lib/js/stompjs/2.3.4/lib/stomp.min.js" type="application/javascript"></script>
+    <script src="/js/stock.js" type="application/javascript"></script>
+
 </div>
 </body>
 </html>

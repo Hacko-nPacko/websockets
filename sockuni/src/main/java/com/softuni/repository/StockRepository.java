@@ -12,4 +12,5 @@ import java.util.stream.Stream;
 @Repository
 public interface StockRepository extends PagingAndSortingRepository<Stock, String> {
 
+    Stream<Stock> findByOrderByCodeAsc();
 }

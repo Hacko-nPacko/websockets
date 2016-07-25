@@ -15,10 +15,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 @Configuration
 @EnableSpringDataWebSupport
 @EnableJpaAuditing
-public class Config {
+public class DataConfig {
 
-    @Bean
-    public Executor executor() {
-        return new ThreadPoolTaskExecutor();
-    }
+
 }

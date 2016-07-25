@@ -1,41 +1,62 @@
+/*!
+ * toggleAttr() jQuery plugin
+ * @link http://github.com/mathiasbynens/toggleAttr-jQuery-Plugin
+ * @description Used to toggle selected="selected", disabled="disabled", checked="checked" etc…
+ * @author Mathias Bynens <http://mathiasbynens.be/>
+ */
+jQuery.fn.toggleAttr = function(attr) {
+    return this.each(function() {
+        var $this = $(this);
+        $this.attr(attr) ? $this.removeAttr(attr) : $this.attr(attr, attr);
+    });
+};
+
+$(document).ready(function () {
     var stompClient = null;
 
-    function setConnected(connected) {
-        document.getElementById('connect').disabled = connected;
-        document.getElementById('disconnect').disabled = !connected;
-        document.getElementById('conversationDiv').style.visibility = connected ? 'visible' : 'hidden';
-        document.getElementById('response').innerHTML = '';
-    }
-
-    function connect() {
-        var socket = new SockJS('/hello');
+    $("button.btn-connect").click(function() {
+        var socket = new SockJS('/listen');
         stompClient = Stomp.over(socket);
-        stompClient.connect({}, function (frame) {
-            setConnected(true);
-            console.log('Connected: ' + frame);
-            stompClient.subscribe('/topic/greetings', function (greeting) {
-                showGreeting(JSON.parse(greeting.body).content);
-            });
-        });
-    }
 
-    function disconnect() {
+        stompClient.connect({}, function (frame) {
+            console.log('Connected: ' + frame);
+            $("button.btn-ctrl").toggleClass("hide");
+            $("button.btn-stock").toggleAttr("disabled");
+            getStockValues();
+        });
+    });
+
+    $("button.btn-disconnect").click(function() {
         if (stompClient != null) {
             stompClient.disconnect();
         }
-        setConnected(false);
         console.log("Disconnected");
+        $("button.btn-ctrl").toggleClass("hide");
+        $("button.btn-stock").toggleAttr("disabled");
+    });
+
+    function subscribe(code) {
+        if (stompClient != null) {
+            stompClient.subscribe('/value/' + code, function (message) {
+                console.log(message);
+                // updateStock(JSON.parse(greeting.body).content);
+            });
+        }
     }
 
-    function sendName() {
-        var name = document.getElementById('name').value;
-        stompClient.send("/app/hello", {}, JSON.stringify({'name': name}));
+    function unsubscribe(code) {
+        stompClient.unsubscribe(code)
     }
 
-    function showGreeting(message) {
+    function getStockValues() {
+        console.log(stompClient.send("/app/listen"));
+    }
+
+    function updateStock(message) {
         var response = document.getElementById('response');
         var p = document.createElement('p');
         p.style.wordWrap = 'break-word';
         p.appendChild(document.createTextNode(message));
         response.appendChild(p);
     }
+});
