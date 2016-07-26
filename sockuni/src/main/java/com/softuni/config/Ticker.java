@@ -26,7 +26,7 @@ public class Ticker {
     @Autowired
     SimpMessagingTemplate simpMessagingTemplate;
 
-    @Scheduled(fixedRate = 2_000)
+//    @Scheduled(fixedRate = 2_000)
     public void tick() {
         stockRepository.findAll().forEach(this::generate);
     }
