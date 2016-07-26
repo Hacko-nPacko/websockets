@@ -14,16 +14,20 @@ jQuery.fn.toggleAttr = function(attr) {
 $(document).ready(function () {
     var stompClient = null;
 
-    $("button.btn-connect").click(function() {
+    function connect() {
         var socket = new SockJS('/recv');
         stompClient = Stomp.over(socket);
 
         stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
-            $("button.btn-ctrl").toggleClass("hide");
-            $("button.btn-stock").toggleAttr("disabled");
+            $("button.btn-connect").addClass("hide");
+            $("button.btn-disconnect").removeClass("hide");
+            $("button.btn-stock").removeAttr("disabled");
+        }, function() {
+            setTimeout(connect, 2000);
         });
-    });
+    }
+    $("button.btn-connect").click(connect);
 
     $("button.btn-disconnect").click(function() {
         if (stompClient != null) {
